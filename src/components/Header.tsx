@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, TrendingUp } from "lucide-react";
+import { Menu, X, TrendingUp, ExternalLink } from "lucide-react";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -93,6 +93,18 @@ const Header: React.FC = () => {
             >
               FAQ
             </button>
+            <a
+              href="https://dexscreener.com/solana/55phhptxjxejwenfvjv9zygdtnkbbxdfpwvyvtcufugh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${linkClass} inline-flex items-center gap-1.5 group relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full`}
+            >
+              <span>DexScreener</span>
+              <ExternalLink
+                className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              />
+            </a>
             <button
               onClick={() => scrollToSection("apply")}
               className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg hover:shadow-purple-600"
@@ -142,6 +154,18 @@ const Header: React.FC = () => {
               >
                 FAQ
               </button>
+              <a
+                href="https://dexscreener.com/solana/55phhptxjxejwenfvjv9zygdtnkbbxdfpwvyvtcufugh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-left text-gray-700 hover:text-purple-600 py-2 transition-colors font-medium flex items-center gap-1.5"
+              >
+                <span>DexScreener</span>
+                <ExternalLink
+                  className="w-4 h-4 opacity-60"
+                  aria-hidden="true"
+                />
+              </a>
               <button
                 onClick={() => scrollToSection("apply")}
                 className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg font-medium"

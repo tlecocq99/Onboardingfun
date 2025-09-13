@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Play,
-  Users,
-  TrendingUp,
-  Zap,
-  ExternalLink,
-  Twitter,
-} from "lucide-react";
+import { Play, Users, TrendingUp, Zap, ExternalLink } from "lucide-react";
 
 const DEV_PUMP_STREAM_URL =
   "https://pump.fun/coin/Fzpo8vGJRRB9d8h9hv5FdNuvskTSXc55GGFvNpZupump";
@@ -121,7 +114,13 @@ const Hero: React.FC = () => {
             >
               <span className="flex items-center">
                 Follow us on X
-                <Twitter className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <img
+                  src="/twitter-x-white.svg"
+                  alt="X logo"
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  loading="lazy"
+                  draggable="false"
+                />
               </span>
             </a>
             <a
