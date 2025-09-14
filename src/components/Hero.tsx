@@ -1,15 +1,74 @@
-import React from "react";
-import { Play, Users, TrendingUp, Zap, ExternalLink } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Play, TrendingUp, ExternalLink, BarChart3 } from "lucide-react";
+import {
+  getStats,
+  formatCurrency,
+  type StatsResponse,
+} from "../services/gecko";
 
 const DEV_PUMP_STREAM_URL =
   "https://pump.fun/coin/Fzpo8vGJRRB9d8h9hv5FdNuvskTSXc55GGFvNpZupump";
 const Hero: React.FC = () => {
+  // Smooth scroll helper
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
+
+  const [marketData, setMarketData] = useState<StatsResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMarketData = async () => {
+      setIsLoading(true);
+      const data = await getStats(
+        "solana",
+        "55phhPtxJxejweNFVjv9zYgDTnkbbXDFPWVyVTcUfugh",
+        24,
+        200
+      );
+      setMarketData(data);
+      setIsLoading(false);
+    };
+
+    loadMarketData();
+
+    // Refresh data every 30 seconds
+    const interval = setInterval(loadMarketData, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const stats = [
+    {
+      label: "Market Cap",
+      value: isLoading
+        ? "Loading..."
+        : marketData
+        ? formatCurrency(marketData.marketCapUsd)
+        : "—",
+      icon: <TrendingUp className="w-5 h-5 text-purple-300 mr-2" />,
+      trend: isLoading
+        ? "Fetching latest pool data..."
+        : marketData
+        ? `Latest ${marketData.tradesConsidered} trades`
+        : "Unavailable",
+    },
+    {
+      label: "Trading Volume",
+      value: isLoading
+        ? "Loading..."
+        : marketData
+        ? formatCurrency(marketData.tradingVolumeUsdPeriod)
+        : "—",
+      icon: <BarChart3 className="w-5 h-5 text-purple-300 mr-2" />,
+      trend: isLoading
+        ? "Collecting trade history..."
+        : marketData
+        ? `${marketData.periodHours}h period`
+        : "Unavailable",
+    },
+  ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 overflow-hidden">
@@ -48,41 +107,24 @@ const Hero: React.FC = () => {
             create lasting impact together.
           </p>
 
-          {/* Stats */}
+          {/* Dynamic Stats */}
           <div className="flex flex-wrap justify-center gap-6 lg:gap-12 mb-12">
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Users className="w-6 h-6 text-purple-300 mr-2" />
-                <span className="text-2xl lg:text-3xl font-bold text-white">
-                  500+
-                </span>
+            {stats.map((s) => (
+              <div key={s.label} className="text-center min-w-[140px]">
+                <div className="flex items-center justify-center mb-2">
+                  {s.icon}
+                  <span className="text-2xl lg:text-3xl font-bold text-white">
+                    {s.value}
+                  </span>
+                </div>
+                <p className="text-purple-200 text-sm lg:text-base">
+                  {s.label}
+                </p>
+                {s.trend && (
+                  <p className="text-purple-400 text-xs mt-1">{s.trend}</p>
+                )}
               </div>
-              <p className="text-purple-200 text-sm lg:text-base">
-                Active Streamers
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <TrendingUp className="w-6 h-6 text-purple-300 mr-2" />
-                <span className="text-2xl lg:text-3xl font-bold text-white">
-                  $50K+
-                </span>
-              </div>
-              <p className="text-purple-200 text-sm lg:text-base">
-                Revenue Generated
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Zap className="w-6 h-6 text-purple-300 mr-2" />
-                <span className="text-2xl lg:text-3xl font-bold text-white">
-                  98%
-                </span>
-              </div>
-              <p className="text-purple-200 text-sm lg:text-base">
-                Success Rate
-              </p>
-            </div>
+            ))}
           </div>
 
           {/* CTA Buttons */}
@@ -146,6 +188,7 @@ const Hero: React.FC = () => {
       </div>
     </section>
   );
+  return null; // unreachable placeholder (should not hit) - kept to satisfy TS if mis-merged
 };
 
 export default Hero;
