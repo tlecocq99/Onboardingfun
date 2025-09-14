@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
           {/* Heading */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Empowering Streamers,
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-white">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-white pb-4">
               Building Communities
             </span>
           </h1>

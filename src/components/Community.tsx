@@ -1,63 +1,57 @@
 import React from 'react';
 import { Users, MessageCircle, Award, Zap, ExternalLink, Twitter, Youtube } from 'lucide-react';
+import fumikiieAvatar from '/public/Fumikiie.avif';
 
 const Community: React.FC = () => {
   const communityFeatures = [
     {
       icon: <MessageCircle className="w-8 h-8" />,
       title: "24/7 Discord Support",
-      description: "Connect with fellow streamers, get instant help, and share your victories in our active Discord community.",
-      link: "#"
+      description:
+        "Connect with fellow streamers, get instant help, and share your victories in our active Discord community.",
+      link: "https://discord.gg/gFKFFZhZpj",
     },
     {
       icon: <Award className="w-8 h-8" />,
       title: "Mentorship Program",
-      description: "Get paired with successful streamers who provide guidance, feedback, and support throughout your journey.",
-      link: "#"
+      description:
+        "Get paired with successful streamers who provide guidance, feedback, and support throughout your journey.",
+      link: "https://discord.gg/gFKFFZhZpj",
     },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Weekly Workshops",
-      description: "Join live training sessions covering streaming techniques, crypto basics, and community building strategies.",
-      link: "#"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Collaborative Events",
-      description: "Participate in community challenges, group streams, and networking events to grow your audience.",
-      link: "#"
-    }
   ];
 
   const featuredStreamers = [
     {
-      name: "StreamerAlex",
-      avatar: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=300",
-      followers: "2.5K",
-      category: "Gaming",
-      earnings: "$2,100"
+      name: "Fumikiie",
+      avatar: fumikiieAvatar,
+      followers: "500",
+      category: "Art & Design",
+      earnings: ">$1,000",
     },
     {
       name: "MusicMaria",
-      avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300",
+      avatar:
+        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300",
       followers: "3.2K",
       category: "Music",
-      earnings: "$1,850"
+      earnings: "$1,850",
     },
     {
       name: "TechTony",
-      avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300",
+      avatar:
+        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300",
       followers: "1.8K",
       category: "Tech Talk",
-      earnings: "$1,650"
+      earnings: "$1,650",
     },
     {
       name: "ArtistAnna",
-      avatar: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300",
+      avatar:
+        "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300",
       followers: "4.1K",
       category: "Digital Art",
-      earnings: "$2,300"
-    }
+      earnings: "$2,300",
+    },
   ];
 
   return (
