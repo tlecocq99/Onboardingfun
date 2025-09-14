@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Play, TrendingUp, ExternalLink, BarChart3 } from "lucide-react";
-import {
-  getStats,
-  formatCurrency,
-  type StatsResponse,
-} from "../services/gecko";
+import { formatCurrency } from "../services/gecko";
+import { useGeckoStats } from "../hooks/useGeckoStats";
 
 const DEV_PUMP_STREAM_URL =
   "https://pump.fun/coin/Fzpo8vGJRRB9d8h9hv5FdNuvskTSXc55GGFvNpZupump";
@@ -15,29 +12,19 @@ const Hero: React.FC = () => {
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [marketData, setMarketData] = useState<StatsResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadMarketData = async () => {
-      setIsLoading(true);
-      const data = await getStats(
-        "solana",
-        "55phhPtxJxejweNFVjv9zYgDTnkbbXDFPWVyVTcUfugh",
-        24,
-        200
-      );
-      setMarketData(data);
-      setIsLoading(false);
-    };
-
-    loadMarketData();
-
-    // Refresh data every 30 seconds
-    const interval = setInterval(loadMarketData, 30000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const {
+    data: marketData,
+    loading: isLoading,
+    lastUpdated,
+    error,
+  } = useGeckoStats({
+    network: "solana",
+    pool: "55phhPtxJxejweNFVjv9zYgDTnkbbXDFPWVyVTcUfugh",
+    hours: 24,
+    limit: 200,
+    intervalMs: 30000,
+    staleMs: 15000,
+  });
 
   const stats = [
     {
@@ -126,6 +113,15 @@ const Hero: React.FC = () => {
               </div>
             ))}
           </div>
+          {error && (
+            <p className="text-xs text-red-300 mb-6">API error: {error}</p>
+          )}
+          {lastUpdated && (
+            <p className="text-xs text-purple-300 mb-6">
+              Updated {new Date(lastUpdated).toLocaleTimeString()} • Source:
+              GeckoTerminal
+            </p>
+          )}
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
